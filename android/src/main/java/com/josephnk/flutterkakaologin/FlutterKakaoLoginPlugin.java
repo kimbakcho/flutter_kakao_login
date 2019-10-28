@@ -149,12 +149,15 @@ public class FlutterKakaoLoginPlugin implements MethodCallHandler, PluginRegistr
    */
   public void requestMe(Result result) {
     final Result _result = result;
-
+    Log.v(LOG_TAG, "requestMe");
     List<String> keys = new ArrayList<>();
     keys.add("properties.nickname");
     keys.add("properties.profile_image");
     keys.add("properties.thumbnail_image");
     keys.add("kakao_account.email");
+    keys.add("kakao_account.age_range");
+    keys.add("kakao_account.birthday");
+    keys.add("kakao_account.gender");
 
     UserManagement.getInstance().me(keys, new MeV2ResponseCallback() {
       @Override
@@ -186,6 +189,9 @@ public class FlutterKakaoLoginPlugin implements MethodCallHandler, PluginRegistr
         final String userEmail = (userAccount == null) ? "" : (userAccount.getEmail() == null) ? "" : userAccount.getEmail();
         final String userPhoneNumber =  (userAccount == null) ? "" : (userAccount.getPhoneNumber() == null) ? "" : userAccount.getPhoneNumber();
         final String userDisplayID =  (userAccount == null) ? "" : (userAccount.getDisplayId() == null) ? "" : userAccount.getDisplayId();
+        final String userGender =  (userAccount == null) ? "" : (userAccount.getGender() == null ) ? "" : userAccount.getGender().getValue();
+        final String userAgeRange =  (userAccount == null) ? "" : (userAccount.getAgeRange() == null ) ? "" : userAccount.getAgeRange().getValue();
+        final String userBirthday =  (userAccount == null) ? "" : (userAccount.getBirthday() == null ) ? "" : userAccount.getBirthday();
 
         Log.v(LOG_TAG, "kakao : onSuccess " + "userID: " + userID + " and userEmail: " + userEmail);
 
@@ -198,6 +204,10 @@ public class FlutterKakaoLoginPlugin implements MethodCallHandler, PluginRegistr
           put("userEmail", userEmail);
           put("userPhoneNumber", userPhoneNumber);
           put("userDisplayID", userDisplayID);
+          put("userGender", userGender);
+          put("userAgeRange", userAgeRange);
+          put("userBirthday", userBirthday);
+
         }});
       }
 
